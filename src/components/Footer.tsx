@@ -17,13 +17,13 @@ import {
 export default function Footer() {
   return (
     <footer id="community" className="relative border-t border-[#27272a] bg-[#09090b] text-[#fafafa] editorial-grid">
-      <div className="relative z-10 mx-auto max-w-7xl px-4 py-16 sm:px-6 md:px-8">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 py-16 sm:px-6 md:px-8">
         
         {/* Top Community Banner */}
-        <div className="mb-14 rounded-3xl border border-white/10 bg-gradient-to-r from-[#121215] via-[#18181b] to-[#121215] p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="mb-14 rounded-3xl border border-white/10 bg-gradient-to-r from-[#121215] via-[#18181b] to-[#121215] p-6 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
-            <span className="badge-sky mb-2">Connect with us</span>
-            <h3 className="text-2xl font-bold text-white tracking-tight">Join the CodersEra Developer Network</h3>
+            <span className="badge-pill-sky mb-2">Connect with us</span>
+            <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">Join the CodersEra Developer Network</h3>
             <p className="text-xs sm:text-sm text-[#a1a1aa] mt-1">Get instant updates about upcoming hackathons, project reviews, and workshops.</p>
           </div>
           <div className="flex flex-wrap gap-3">
@@ -31,7 +31,7 @@ export default function Footer() {
               href="https://chat.whatsapp.com/H3x7iIZ857S7ne4eLIdb06" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="btn-codersera-sky text-xs py-2.5 px-4"
+              className="btn-sky-glow text-xs py-2.5 px-4"
             >
               WhatsApp Global
               <ExternalLink className="h-3 w-3" />
@@ -40,7 +40,7 @@ export default function Footer() {
               href="https://chat.whatsapp.com/IZFWh2YhwNh1Hzl5GDci2F" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="btn-codersera-secondary text-xs py-2.5 px-4"
+              className="btn-dark-pill text-xs py-2.5 px-4"
             >
               WhatsApp NIET Group
             </a>
@@ -48,7 +48,7 @@ export default function Footer() {
         </div>
 
         {/* 4 Columns Grid */}
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4 pb-14 border-b border-white/10">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4 pb-12 border-b border-white/10">
           {/* Brand Column */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-3">

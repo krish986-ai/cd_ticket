@@ -239,7 +239,7 @@ export default function AdminPage() {
   if (!authenticated) {
     return (
       <main className="min-h-screen flex items-center justify-center bg-[#09090b] editorial-grid px-4 py-8">
-        <div className="w-full max-w-md rounded-3xl border border-white/10 bg-[#121215]/95 p-8 sm:p-10 shadow-2xl backdrop-blur-2xl">
+        <div className="w-full max-w-md codersera-card p-8 sm:p-10 shadow-2xl">
           
           <Link 
             href="/" 
@@ -265,7 +265,7 @@ export default function AdminPage() {
           </div>
 
           <div className="text-center mb-8">
-            <span className="badge-sky text-[11px] mb-2">STAFF CONTROL ROOM</span>
+            <span className="badge-pill-sky text-[11px] mb-2">STAFF CONTROL ROOM</span>
             <h1 className="text-2xl font-extrabold text-white tracking-tight mt-1">Admin Verification Desk</h1>
             <p className="text-xs text-[#a1a1aa] mt-2">Private access for CodersEra event coordinators and staff.</p>
           </div>
@@ -295,7 +295,7 @@ export default function AdminPage() {
 
             <button
               type="submit"
-              className="btn-codersera-sky w-full py-3 text-xs font-bold"
+              className="btn-sky-glow w-full py-3 text-xs font-bold"
             >
               Unlock Event Dashboard
             </button>
@@ -312,7 +312,7 @@ export default function AdminPage() {
   // --- AUTHENTICATED DASHBOARD ---
   return (
     <main className="min-h-screen bg-[#09090b] editorial-grid px-4 py-6 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl space-y-8">
+      <div className="mx-auto max-w-6xl space-y-8">
         
         {/* Top App Header */}
         <header className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
@@ -329,7 +329,7 @@ export default function AdminPage() {
             <div>
               <div className="flex items-center gap-2.5">
                 <h1 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">Event Control Room</h1>
-                <span className="badge-sky text-[10px] py-0.5 px-2">LIVE DESK</span>
+                <span className="badge-pill-sky text-[10px] py-0.5 px-2">LIVE DESK</span>
               </div>
               <p className="text-xs text-[#a1a1aa] mt-0.5">Automate India NIET Chapter 2026 · Attendee Management</p>
             </div>
@@ -338,7 +338,7 @@ export default function AdminPage() {
           <div className="flex items-center gap-3">
             <Link
               href="/"
-              className="btn-codersera-secondary text-xs py-2 px-3.5"
+              className="btn-dark-pill text-xs py-2 px-3.5"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
               Public Portal
@@ -346,7 +346,7 @@ export default function AdminPage() {
             <button
               type="button"
               onClick={handleLogout}
-              className="btn-codersera-secondary text-xs py-2 px-3.5 text-red-400 hover:text-red-300"
+              className="btn-dark-pill text-xs py-2 px-3.5 text-red-400 hover:text-red-300"
             >
               <LogOut className="h-3.5 w-3.5" />
               Sign Out
@@ -356,7 +356,7 @@ export default function AdminPage() {
 
         {/* Status Notification */}
         {message && (
-          <div className="rounded-2xl border border-sky-500/20 bg-sky-500/10 p-4 flex items-center justify-between text-xs text-[#38bdf8] animate-fade-in">
+          <div className="rounded-2xl border border-sky-500/20 bg-sky-500/10 p-4 flex items-center justify-between text-xs text-[#38bdf8]">
             <span>{message}</span>
             <button onClick={() => setMessage("")} className="text-[#a1a1aa] hover:text-white text-xs">Dismiss</button>
           </div>
@@ -364,7 +364,7 @@ export default function AdminPage() {
 
         {/* 4 Analytics Stat Cards */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="glass-card rounded-2xl p-6 flex items-center justify-between">
+          <div className="codersera-card p-6 flex items-center justify-between">
             <div>
               <p className="text-xs font-semibold uppercase tracking-wider text-[#a1a1aa]">Total Registrations</p>
               <p className="text-3xl font-extrabold text-white mt-1">{records.length}</p>
@@ -377,7 +377,7 @@ export default function AdminPage() {
             </div>
           </div>
 
-          <div className="glass-card rounded-2xl p-6 flex items-center justify-between">
+          <div className="codersera-card p-6 flex items-center justify-between">
             <div>
               <p className="text-xs font-semibold uppercase tracking-wider text-[#a1a1aa]">Verified & Checked-in</p>
               <p className="text-3xl font-extrabold text-[#34d399] mt-1">{verifiedCount}</p>
@@ -390,7 +390,7 @@ export default function AdminPage() {
             </div>
           </div>
 
-          <div className="glass-card rounded-2xl p-6 flex items-center justify-between">
+          <div className="codersera-card p-6 flex items-center justify-between">
             <div>
               <p className="text-xs font-semibold uppercase tracking-wider text-[#a1a1aa]">Pending Check-in</p>
               <p className="text-3xl font-extrabold text-[#fbbf24] mt-1">{records.length - verifiedCount}</p>
@@ -401,7 +401,7 @@ export default function AdminPage() {
             </div>
           </div>
 
-          <div className="glass-card rounded-2xl p-6 flex items-center justify-between">
+          <div className="codersera-card p-6 flex items-center justify-between">
             <div>
               <p className="text-xs font-semibold uppercase tracking-wider text-[#a1a1aa]">Active Branches</p>
               <p className="text-3xl font-extrabold text-white mt-1">{uniqueDepartments.length}</p>
@@ -414,7 +414,7 @@ export default function AdminPage() {
         </div>
 
         {/* Gate Scanner / Fast Manual Check-In Bar */}
-        <div className="rounded-3xl border border-white/10 bg-[#121215]/80 p-6 backdrop-blur-2xl">
+        <div className="codersera-card p-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-xl bg-[#38bdf8]/10 border border-[#38bdf8]/20 flex items-center justify-center text-[#38bdf8]">
@@ -436,7 +436,7 @@ export default function AdminPage() {
               />
               <button
                 type="submit"
-                className="btn-codersera-sky text-xs py-2.5 px-4 shrink-0"
+                className="btn-sky-glow text-xs py-2.5 px-4 shrink-0"
               >
                 Verify Entry
               </button>
@@ -455,18 +455,17 @@ export default function AdminPage() {
         </div>
 
         {/* Roster Controls & Table Section */}
-        <section className="rounded-3xl border border-white/10 bg-[#121215]/90 overflow-hidden shadow-2xl">
+        <section className="codersera-card overflow-hidden">
           
           {/* Table Toolbar Header */}
           <div className="p-6 border-b border-white/10 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
             <div>
-              <span className="badge-sky text-[10px] mb-1">REGISTRATION ROSTER</span>
+              <span className="badge-pill-sky text-[10px] mb-1">REGISTRATION ROSTER</span>
               <h2 className="text-xl font-extrabold text-white tracking-tight">Attendee Database ({filteredRecords.length})</h2>
             </div>
 
             {/* Filter & Action Buttons */}
             <div className="flex flex-wrap items-center gap-3">
-              {/* Search input */}
               <div className="relative min-w-[200px]">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[#71717a]" />
                 <input
@@ -478,7 +477,6 @@ export default function AdminPage() {
                 />
               </div>
 
-              {/* Department Dropdown */}
               <select
                 value={department}
                 onChange={(e) => setDepartment(e.target.value)}
@@ -490,7 +488,6 @@ export default function AdminPage() {
                 ))}
               </select>
 
-              {/* Status Filter */}
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
@@ -501,32 +498,29 @@ export default function AdminPage() {
                 <option value="pending">Pending Only</option>
               </select>
 
-              {/* CSV Export */}
               <button
                 type="button"
                 onClick={exportCsv}
-                className="btn-codersera-sky text-xs py-2 px-3.5"
+                className="btn-sky-glow text-xs py-2 px-3.5"
               >
                 <Download className="h-3.5 w-3.5" />
                 Export CSV
               </button>
 
-              {/* Sample Data */}
               <button
                 type="button"
                 onClick={addSampleData}
-                className="btn-codersera-secondary text-xs py-2 px-3"
+                className="btn-dark-pill text-xs py-2 px-3"
                 title="Add sample mock student passes"
               >
                 <PlusCircle className="h-3.5 w-3.5" />
                 Mock Data
               </button>
 
-              {/* Clear Photos */}
               <button
                 type="button"
                 onClick={clearAllPhotos}
-                className="btn-codersera-secondary text-xs py-2 px-3 text-[#a1a1aa]"
+                className="btn-dark-pill text-xs py-2 px-3 text-[#a1a1aa]"
                 title="Clear photos to reduce storage"
               >
                 <ImageOff className="h-3.5 w-3.5" />
@@ -551,7 +545,6 @@ export default function AdminPage() {
                 {filteredRecords.length > 0 ? (
                   filteredRecords.map((r) => (
                     <tr key={r.id} className="hover:bg-white/[0.02] transition-colors">
-                      {/* Student Info */}
                       <td className="p-4 pl-6">
                         <div className="flex items-center gap-3">
                           {r.photoData ? (
@@ -571,28 +564,24 @@ export default function AdminPage() {
                         </div>
                       </td>
 
-                      {/* Department & Year */}
                       <td className="p-4">
                         <p className="font-semibold text-white">{r.department}</p>
                         <p className="text-[#a1a1aa] text-[11px]">{r.year}</p>
                       </td>
 
-                      {/* Student ID */}
                       <td className="p-4 font-mono font-bold text-[#fafafa]">
                         {r.studentId}
                       </td>
 
-                      {/* Ticket Number */}
                       <td className="p-4 font-mono font-bold text-[#38bdf8]">
                         {r.ticketNumber}
                       </td>
 
-                      {/* Status */}
                       <td className="p-4">
                         <button
                           type="button"
                           onClick={() => toggleVerification(r.id)}
-                          className={r.verified ? "badge-emerald cursor-pointer" : "badge-zinc cursor-pointer"}
+                          className={r.verified ? "badge-pill-emerald cursor-pointer" : "badge-pill-zinc cursor-pointer"}
                         >
                           {r.verified ? (
                             <>
@@ -608,12 +597,11 @@ export default function AdminPage() {
                         </button>
                       </td>
 
-                      {/* Actions */}
                       <td className="p-4 pr-6 text-right space-x-2">
                         <button
                           type="button"
                           onClick={() => toggleVerification(r.id)}
-                          className="btn-codersera-secondary text-[11px] py-1.5 px-3"
+                          className="btn-dark-pill text-[11px] py-1.5 px-3"
                         >
                           {r.verified ? "Undo" : "Verify Entry"}
                         </button>

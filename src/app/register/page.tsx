@@ -17,11 +17,11 @@ import {
   Phone, 
   GraduationCap, 
   Building2, 
-  ShieldCheck,
-  CheckCircle2,
-  Calendar,
-  MapPin,
-  RefreshCw
+  ShieldCheck, 
+  CheckCircle2, 
+  Calendar, 
+  MapPin, 
+  RefreshCw 
 } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 
@@ -80,7 +80,7 @@ export default function RegisterPage() {
       const records: Registration[] = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || "[]");
       
       if (records.some((record) => record.email.toLowerCase() === values.email.toLowerCase())) {
-        setError("This email address already has a generated ticket. Please check your email or contact support.");
+        setError("This email address already has a generated ticket. Use search to view your pass.");
         setIsSubmitting(false);
         return;
       }
@@ -123,7 +123,7 @@ export default function RegisterPage() {
   if (registration) {
     return (
       <main className="min-h-screen bg-[#09090b] editorial-grid px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-3xl">
           
           {/* Top Back Navigation */}
           <div className="flex items-center justify-between mb-8">
@@ -147,7 +147,7 @@ export default function RegisterPage() {
             <button
               onClick={handlePrint}
               type="button"
-              className="btn-codersera-secondary text-xs py-2 px-3.5"
+              className="btn-dark-pill text-xs py-2 px-3.5"
             >
               <Printer className="h-3.5 w-3.5" />
               Print / Save Pass
@@ -158,13 +158,13 @@ export default function RegisterPage() {
           <div className="mb-6 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-4 flex items-center justify-between text-xs text-[#34d399]">
             <div className="flex items-center gap-2.5">
               <CheckCircle2 className="h-4 w-4 shrink-0" />
-              <span><strong>Registration Successful!</strong> Your verified virtual ticket is active.</span>
+              <span><strong>Registration Successful!</strong> Your verified virtual ticket is ready.</span>
             </div>
-            <span className="font-mono">{registration.ticketNumber}</span>
+            <span className="font-mono font-bold">{registration.ticketNumber}</span>
           </div>
 
           {/* Holographic Virtual Pass Card */}
-          <div ref={passRef} className="rounded-3xl ticket-hologram p-6 sm:p-10 relative overflow-hidden backdrop-blur-2xl">
+          <div ref={passRef} className="ticket-card p-6 sm:p-10 relative overflow-hidden backdrop-blur-2xl">
             {/* Background Light Glows */}
             <div className="pointer-events-none absolute top-0 right-0 w-80 h-80 rounded-full bg-[#38bdf8]/10 blur-3xl" />
             <div className="pointer-events-none absolute bottom-0 left-0 w-80 h-80 rounded-full bg-emerald-500/10 blur-3xl" />
@@ -184,63 +184,60 @@ export default function RegisterPage() {
                 <div>
                   <div className="flex items-center gap-2">
                     <h2 className="text-xl font-extrabold text-white tracking-tight">CodersEra</h2>
-                    <span className="badge-sky text-[10px] py-0.5 px-2">NIET CHAPTER</span>
+                    <span className="badge-pill-sky text-[10px] py-0.5 px-2">NIET CHAPTER</span>
                   </div>
                   <p className="text-xs text-[#a1a1aa] mt-0.5">Automate India Hackathon 2026 · Verified Pass</p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
-                <span className="badge-emerald text-xs">
-                  <ShieldCheck className="h-3.5 w-3.5" />
-                  AUTHENTICATED ENTRY
-                </span>
-              </div>
+              <span className="badge-pill-emerald text-xs">
+                <ShieldCheck className="h-3.5 w-3.5" />
+                AUTHENTICATED ENTRY
+              </span>
             </div>
 
             {/* Ticket Body Content */}
             <div className="grid md:grid-cols-[1.3fr_0.7fr] gap-8 pt-8 items-center">
               {/* Left Student Info */}
-              <div className="space-y-6">
+              <div className="space-y-5">
                 <div>
                   <p className="text-[11px] font-bold uppercase tracking-wider text-[#38bdf8]">ATTENDEE NAME</p>
-                  <h3 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">{registration.name}</h3>
+                  <h3 className="text-2xl sm:text-3xl font-extrabold text-white mt-0.5">{registration.name}</h3>
                   <p className="text-xs text-[#a1a1aa] mt-1">{registration.email} · {registration.phone}</p>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 border-t border-white/10 pt-4">
+                <div className="grid grid-cols-3 gap-3 border-t border-white/10 pt-4 text-left">
                   <div>
                     <p className="text-[10px] uppercase tracking-wider text-[#a1a1aa]">STUDENT ID</p>
-                    <p className="text-sm font-bold text-white font-mono mt-0.5">{registration.studentId}</p>
+                    <p className="text-xs sm:text-sm font-bold text-white font-mono mt-0.5">{registration.studentId}</p>
                   </div>
                   <div>
                     <p className="text-[10px] uppercase tracking-wider text-[#a1a1aa]">DEPARTMENT</p>
-                    <p className="text-sm font-semibold text-white mt-0.5">{registration.department}</p>
+                    <p className="text-xs sm:text-sm font-semibold text-white mt-0.5">{registration.department}</p>
                   </div>
                   <div>
-                    <p className="text-[10px] uppercase tracking-wider text-[#a1a1aa]">ACADEMIC YEAR</p>
-                    <p className="text-sm font-semibold text-white mt-0.5">{registration.year}</p>
+                    <p className="text-[10px] uppercase tracking-wider text-[#a1a1aa]">YEAR</p>
+                    <p className="text-xs sm:text-sm font-semibold text-white mt-0.5">{registration.year}</p>
                   </div>
                 </div>
 
-                {/* Event Location & Date Strip */}
-                <div className="rounded-xl bg-white/5 border border-white/5 p-3.5 text-xs text-[#a1a1aa] space-y-1.5">
+                {/* Event Location Strip */}
+                <div className="rounded-xl bg-white/5 border border-white/5 p-3 text-xs text-[#a1a1aa] space-y-1">
                   <div className="flex items-center gap-2 text-white">
                     <Calendar className="h-3.5 w-3.5 text-[#38bdf8]" />
                     <span>Saturday, 22 August 2026 • 10:00 AM IST</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <MapPin className="h-3.5 w-3.5 text-[#38bdf8]" />
-                    <span>Auditorium, NIET Campus, Knowledge Park II, Greater Noida</span>
+                    <span>Auditorium, NIET Greater Noida</span>
                   </div>
                 </div>
               </div>
 
-              {/* Right QR Code & Avatar Badge */}
-              <div className="flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-[#09090b]/80 p-6 text-center">
-                {/* Photo Avatar if uploaded */}
+              {/* Right QR Code & Photo */}
+              <div className="flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-[#09090b]/80 p-5 text-center">
                 {registration.photoData ? (
-                  <div className="relative mb-4 h-20 w-20 overflow-hidden rounded-full border-2 border-[#38bdf8] shadow-lg">
+                  <div className="relative mb-3 h-16 w-16 overflow-hidden rounded-full border-2 border-[#38bdf8] shadow-md">
                     <img 
                       src={registration.photoData} 
                       alt={registration.name} 
@@ -248,13 +245,12 @@ export default function RegisterPage() {
                     />
                   </div>
                 ) : (
-                  <div className="relative mb-4 h-16 w-16 overflow-hidden rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#38bdf8]">
-                    <User className="h-8 w-8" />
+                  <div className="relative mb-3 h-14 w-14 overflow-hidden rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#38bdf8]">
+                    <User className="h-7 w-7" />
                   </div>
                 )}
 
-                {/* High contrast QR Code */}
-                <div className="rounded-xl bg-white p-3 shadow-inner">
+                <div className="rounded-xl bg-white p-2.5 shadow-inner">
                   <QRCodeSVG 
                     value={JSON.stringify({
                       t: registration.ticketNumber,
@@ -262,12 +258,12 @@ export default function RegisterPage() {
                       i: registration.studentId,
                       d: registration.department,
                     })}
-                    size={140}
+                    size={120}
                     level="H"
                   />
                 </div>
 
-                <p className="font-mono text-xs font-bold text-[#38bdf8] mt-3 tracking-wider">
+                <p className="font-mono text-xs font-bold text-[#38bdf8] mt-2.5 tracking-wider">
                   {registration.ticketNumber}
                 </p>
                 <p className="text-[10px] text-[#a1a1aa] mt-0.5 flex items-center gap-1">
@@ -277,13 +273,13 @@ export default function RegisterPage() {
             </div>
 
             {/* Pass Footer */}
-            <div className="mt-8 border-t border-white/10 pt-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-[#71717a]">
+            <div className="mt-8 border-t border-white/10 pt-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-[#71717a]">
               <span>Issued by CodersEra NIET Student Community • Supported by Azure</span>
-              <span>Keep this pass handy on your mobile during check-in</span>
+              <span>Present this pass on your phone upon arrival</span>
             </div>
           </div>
 
-          {/* Action Footer */}
+          {/* Action Buttons */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <button
               type="button"
@@ -291,14 +287,14 @@ export default function RegisterPage() {
                 setRegistration(null);
                 setPhoto(undefined);
               }}
-              className="btn-codersera-secondary text-xs py-2.5 px-4"
+              className="btn-dark-pill text-xs py-2.5 px-4"
             >
               <RefreshCw className="h-3.5 w-3.5" />
               Register Another Student
             </button>
             <Link 
               href="/"
-              className="btn-codersera-primary text-xs py-2.5 px-4"
+              className="btn-sky-glow text-xs py-2.5 px-4"
             >
               Return to Public Site
             </Link>
@@ -311,8 +307,8 @@ export default function RegisterPage() {
 
   // --- RENDER REGISTRATION FORM ---
   return (
-    <main className="min-h-screen bg-[#09090b] editorial-grid px-4 py-8 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-5xl">
+    <main className="min-h-screen bg-[#09090b] editorial-grid px-4 py-8 sm:px-6 lg:px-8 flex flex-col items-center">
+      <div className="w-full max-w-5xl">
         
         {/* Top Header & Navigation */}
         <Link 
@@ -332,40 +328,40 @@ export default function RegisterPage() {
           <span>Back to CodersEra</span>
         </Link>
 
-        {/* 2-Column Grid: Left Info & Right Form */}
-        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+        {/* 2-Column Grid: Left Story & Right Form */}
+        <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] items-start">
           
           {/* Left Side: Brand Story & Event Highlights */}
-          <div className="space-y-6 lg:pt-4">
-            <span className="badge-sky">
+          <div className="space-y-6 lg:pt-2">
+            <span className="badge-pill-sky">
               <Sparkles className="h-3.5 w-3.5" /> Official Event Registration
             </span>
 
-            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-[1.08]">
+            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-[1.08]">
               Make your <br />
               <span className="text-[#38bdf8]">entrance.</span>
             </h1>
 
-            <p className="text-sm text-[#a1a1aa] leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#a1a1aa] leading-relaxed">
               Register once for the <strong>Automate India NIET Chapter 2026</strong> hackathon & developer conference.
               Receive your authenticated virtual identification pass instantly.
             </p>
 
-            <div className="space-y-3.5 border-t border-white/10 pt-6 text-xs text-[#a1a1aa]">
+            <div className="space-y-3 border-t border-white/10 pt-5 text-xs text-[#a1a1aa]">
               <div className="flex items-center gap-3">
-                <div className="h-7 w-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#34d399]">
+                <div className="h-7 w-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#34d399] shrink-0">
                   <Check className="h-4 w-4" />
                 </div>
                 <span>Free admission for all verified students</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="h-7 w-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#38bdf8]">
+                <div className="h-7 w-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#38bdf8] shrink-0">
                   <QrCode className="h-4 w-4" />
                 </div>
                 <span>Instant high-speed QR check-in at auditorium</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="h-7 w-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#38bdf8]">
+                <div className="h-7 w-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#38bdf8] shrink-0">
                   <Lock className="h-4 w-4" />
                 </div>
                 <span>Single identity verification (Anti-duplicate protection)</span>
@@ -373,7 +369,7 @@ export default function RegisterPage() {
             </div>
 
             {/* Quick Event Summary Box */}
-            <div className="rounded-2xl border border-white/10 bg-[#121215]/80 p-5 text-xs text-[#a1a1aa] space-y-2">
+            <div className="codersera-card p-5 text-xs text-[#a1a1aa] space-y-1.5">
               <p className="font-bold text-white uppercase tracking-wider text-[11px]">Event Details</p>
               <p className="text-white font-medium">Automate India NIET Chapter 2026</p>
               <p>22 August 2026 • 10:00 AM – 6:00 PM</p>
@@ -382,13 +378,13 @@ export default function RegisterPage() {
           </div>
 
           {/* Right Side: Form Card */}
-          <div className="rounded-3xl border border-white/10 bg-[#121215]/90 p-6 sm:p-9 shadow-2xl backdrop-blur-2xl">
-            <div className="border-b border-white/10 pb-5 mb-6">
+          <div className="codersera-card p-6 sm:p-8 md:p-9 shadow-2xl">
+            <div className="border-b border-white/10 pb-4 mb-6">
               <span className="text-[11px] font-bold uppercase tracking-wider text-[#a1a1aa]">STUDENT PASS ISSUANCE</span>
-              <h2 className="text-2xl font-extrabold text-white tracking-tight mt-1">Create Your Verified Pass</h2>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight mt-1">Create Your Verified Pass</h2>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-4">
               {/* Full Name */}
               <div>
                 <label className="block text-xs font-semibold text-[#fafafa] mb-1.5 flex items-center gap-1.5">
@@ -404,7 +400,7 @@ export default function RegisterPage() {
                 />
               </div>
 
-              {/* Email & Phone Row */}
+              {/* Email & Phone */}
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-[#fafafa] mb-1.5 flex items-center gap-1.5">
@@ -436,18 +432,18 @@ export default function RegisterPage() {
                 </div>
               </div>
 
-              {/* Student ID, Department, Year */}
-              <div className="grid sm:grid-cols-3 gap-4">
+              {/* Roll, Branch, Year */}
+              <div className="grid sm:grid-cols-3 gap-3">
                 <div>
                   <label className="block text-xs font-semibold text-[#fafafa] mb-1.5 flex items-center gap-1.5">
                     <GraduationCap className="h-3.5 w-3.5 text-[#38bdf8]" />
-                    College Roll / ID <span className="text-red-400">*</span>
+                    Roll ID <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="text"
                     required
                     name="studentId"
-                    placeholder="e.g. 2101330100..."
+                    placeholder="2201330..."
                     className="input-codersera font-mono text-xs"
                   />
                 </div>
@@ -455,27 +451,26 @@ export default function RegisterPage() {
                 <div>
                   <label className="block text-xs font-semibold text-[#fafafa] mb-1.5 flex items-center gap-1.5">
                     <Building2 className="h-3.5 w-3.5 text-[#38bdf8]" />
-                    Department <span className="text-red-400">*</span>
+                    Branch <span className="text-red-400">*</span>
                   </label>
                   <select required name="department" className="input-codersera text-xs">
-                    <option value="">Select Branch</option>
+                    <option value="">Select</option>
                     <option value="CSE">CSE</option>
                     <option value="CSE-AI&ML">CSE (AI & ML)</option>
                     <option value="CSE-DS">CSE (Data Science)</option>
                     <option value="IT">IT</option>
                     <option value="ECE">ECE</option>
-                    <option value="Mechanical">Mechanical</option>
-                    <option value="Other">Other Branch</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
 
                 <div>
                   <label className="block text-xs font-semibold text-[#fafafa] mb-1.5 flex items-center gap-1.5">
                     <Calendar className="h-3.5 w-3.5 text-[#38bdf8]" />
-                    Academic Year <span className="text-red-400">*</span>
+                    Year <span className="text-red-400">*</span>
                   </label>
                   <select required name="year" className="input-codersera text-xs">
-                    <option value="">Select Year</option>
+                    <option value="">Select</option>
                     <option value="1st Year">1st Year</option>
                     <option value="2nd Year">2nd Year</option>
                     <option value="3rd Year">3rd Year</option>
@@ -484,25 +479,25 @@ export default function RegisterPage() {
                 </div>
               </div>
 
-              {/* Photo Upload with Live Preview */}
+              {/* Photo Upload */}
               <div>
                 <label className="block text-xs font-semibold text-[#fafafa] mb-1.5">
                   Student Photo (for QR Pass verification)
                 </label>
-                <div className="flex items-center gap-4 rounded-xl border border-dashed border-white/15 bg-[#18181b]/50 p-4 hover:border-[#38bdf8]/50 transition-colors">
+                <div className="flex items-center gap-4 rounded-xl border border-dashed border-white/15 bg-[#18181b]/50 p-3.5 hover:border-[#38bdf8]/50 transition-colors">
                   {photo ? (
-                    <div className="relative h-14 w-14 overflow-hidden rounded-full border border-[#38bdf8] shrink-0">
+                    <div className="relative h-12 w-12 overflow-hidden rounded-full border border-[#38bdf8] shrink-0">
                       <img src={photo} alt="Preview" className="h-full w-full object-cover" />
                     </div>
                   ) : (
-                    <div className="h-12 w-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#38bdf8] shrink-0">
-                      <Upload className="h-5 w-5" />
+                    <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#38bdf8] shrink-0">
+                      <Upload className="h-4 w-4" />
                     </div>
                   )}
                   
                   <div className="flex-1 text-xs">
                     <label className="cursor-pointer font-semibold text-[#38bdf8] hover:underline">
-                      <span>{photo ? "Change student photo" : "Upload student photo"}</span>
+                      <span>{photo ? "Change student photo" : "Upload photo"}</span>
                       <input 
                         type="file" 
                         accept="image/*" 
@@ -510,7 +505,7 @@ export default function RegisterPage() {
                         className="sr-only" 
                       />
                     </label>
-                    <p className="text-[#a1a1aa] text-[11px] mt-0.5">JPG, PNG or WEBP · Max 2 MB</p>
+                    <p className="text-[#a1a1aa] text-[10px]">JPG, PNG or WEBP · Max 2 MB</p>
                   </div>
 
                   {photo && (
@@ -527,14 +522,14 @@ export default function RegisterPage() {
 
               {/* Error Message */}
               {error && (
-                <div className="p-3.5 rounded-xl border border-red-500/30 bg-red-500/10 text-xs text-red-400">
+                <div className="p-3 rounded-xl border border-red-500/30 bg-red-500/10 text-xs text-red-400">
                   {error}
                 </div>
               )}
 
               {/* Notice Message */}
               {notice && (
-                <div className="p-3.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-xs text-[#34d399]">
+                <div className="p-3 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-xs text-[#34d399]">
                   {notice}
                 </div>
               )}
@@ -543,13 +538,13 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="btn-codersera-sky w-full py-3 text-sm font-bold shadow-lg shadow-[#38bdf8]/20"
+                className="btn-sky-glow w-full py-3 text-xs sm:text-sm font-bold shadow-lg mt-2"
               >
                 <Ticket className="h-4 w-4" />
                 {isSubmitting ? "Generating Encrypted Pass..." : "Generate My Virtual Pass"}
               </button>
 
-              <p className="text-center text-[11px] text-[#71717a]">
+              <p className="text-center text-[10px] text-[#71717a] pt-1">
                 By generating this pass, you confirm your student details are accurate for verification.
               </p>
             </form>
