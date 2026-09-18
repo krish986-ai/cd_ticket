@@ -13,40 +13,45 @@ import {
   Users, 
   UserCheck, 
   Building2, 
-  ImageOff, 
   PlusCircle, 
   CheckCircle2, 
   XCircle, 
   Lock, 
-  QrCode,
-  Calendar,
-  Sparkles,
-  Trash2
+  QrCode, 
+  Trash2, 
+  ExternalLink,
+  Award,
+  Layers
 } from "lucide-react";
 
-type Registration = {
+type PassRegistration = {
   id: string;
-  name: string;
+  fullName: string;
+  rollNumber: string;
   email: string;
   phone: string;
-  studentId: string;
-  department: string;
-  year: string;
+  college: string;
+  degreeBranch: string;
+  teamName: string;
+  teamRole: string;
+  problemStatementId: string;
+  yearOfStudy: string;
+  domain: string;
   photoData?: string;
   ticketNumber: string;
   createdAt: string;
   verified: boolean;
 };
 
-const STORAGE_KEY = "niet-codersera-registrations";
+const STORAGE_KEY = "niet-codersera-sih-registrations";
 const ADMIN_PASSWORD = "@@cd_tic.1215";
 
 export default function AdminPage() {
   const [authenticated, setAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
-  const [records, setRecords] = useState<Registration[]>([]);
+  const [records, setRecords] = useState<PassRegistration[]>([]);
   const [query, setQuery] = useState("");
-  const [department, setDepartment] = useState("all");
+  const [domainFilter, setDomainFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
   const [message, setMessage] = useState("");
   const [checkInCode, setCheckInCode] = useState("");
@@ -69,7 +74,7 @@ export default function AdminPage() {
     }
   }
 
-  function saveRecords(updated: Registration[]) {
+  function saveRecords(updated: PassRegistration[]) {
     setRecords(updated);
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
   }
@@ -98,15 +103,19 @@ export default function AdminPage() {
       return;
     }
 
-    const header = "Ticket Number,Full Name,Email,Phone,Student ID,Department,Year,Verified,Registration Date\n";
+    const header = "Ticket Number,Full Name,Roll Number,Email,Phone,Degree & Branch,Team Name,Team Role,Problem Statement ID,Year,Domain,Verified,Date\n";
     const rows = filteredRecords.map((r) => [
       r.ticketNumber,
-      r.name,
+      r.fullName,
+      r.rollNumber,
       r.email,
       r.phone,
-      r.studentId,
-      r.department,
-      r.year,
+      r.degreeBranch,
+      r.teamName,
+      r.teamRole,
+      r.problemStatementId,
+      r.yearOfStudy,
+      r.domain,
       r.verified ? "Yes" : "No",
       r.createdAt,
     ].map((val) => `"${String(val).replace(/"/g, '""')}"`).join(",")).join("\n");
@@ -115,7 +124,7 @@ export default function AdminPage() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `codersera-niet-passes-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.download = `codersera-sih-passes-${new Date().toISOString().slice(0, 10)}.csv`;
     link.click();
     URL.revokeObjectURL(url);
     setMessage("Registration roster exported to CSV successfully.");
@@ -134,48 +143,56 @@ export default function AdminPage() {
     setMessage("Registration removed from roster.");
   }
 
-  function clearAllPhotos() {
-    if (!confirm("Clear all attendee uploaded photos to free up local device memory?")) return;
-    const updated = records.map((r) => ({ ...r, photoData: undefined }));
-    saveRecords(updated);
-    setMessage("All attendee photos cleared from local device cache.");
-  }
-
   function addSampleData() {
-    const samples: Registration[] = [
+    const samples: PassRegistration[] = [
       {
         id: "sample-1",
-        name: "Aaditya Srivastava",
-        email: "aaditya@niet.co.in",
+        fullName: "Aarav Sharma",
+        rollNumber: "2201330100012",
+        email: "aarav.cse22@niet.co.in",
         phone: "9876543210",
-        studentId: "220133010001",
-        department: "CSE",
-        year: "3rd Year",
-        ticketNumber: "NIET-2026-X8K101",
+        college: "Noida Institute of Engineering & Technology (NIET)",
+        degreeBranch: "B.Tech CSE (AIML)",
+        teamName: "CodeCrafters",
+        teamRole: "Team Leader",
+        problemStatementId: "SIH-1520",
+        yearOfStudy: "3rd Year",
+        domain: "AI & Machine Learning",
+        ticketNumber: "NIET-SIH-2026-X8K10",
         createdAt: new Date().toISOString(),
         verified: true,
       },
       {
         id: "sample-2",
-        name: "Anshika Mishra",
-        email: "anshika@niet.co.in",
+        fullName: "Ananya Gupta",
+        rollNumber: "2201330100045",
+        email: "ananya.cse22@niet.co.in",
         phone: "9876543211",
-        studentId: "220133010045",
-        department: "CSE-AI&ML",
-        year: "3rd Year",
-        ticketNumber: "NIET-2026-M4P902",
+        college: "Noida Institute of Engineering & Technology (NIET)",
+        degreeBranch: "B.Tech CSE (Core)",
+        teamName: "CodeCrafters",
+        teamRole: "Team Member",
+        problemStatementId: "SIH-1520",
+        yearOfStudy: "3rd Year",
+        domain: "AI & Machine Learning",
+        ticketNumber: "NIET-SIH-2026-M4P90",
         createdAt: new Date().toISOString(),
         verified: true,
       },
       {
         id: "sample-3",
-        name: "Rohan Verma",
-        email: "rohan.v@niet.co.in",
+        fullName: "Rohan Verma",
+        rollNumber: "2301330100112",
+        email: "rohan.it23@niet.co.in",
         phone: "9876543212",
-        studentId: "230133010112",
-        department: "IT",
-        year: "2nd Year",
-        ticketNumber: "NIET-2026-B2Z554",
+        college: "Noida Institute of Engineering & Technology (NIET)",
+        degreeBranch: "B.Tech IT",
+        teamName: "CyberKnights",
+        teamRole: "Team Leader",
+        problemStatementId: "SIH-1604",
+        yearOfStudy: "2nd Year",
+        domain: "Cybersecurity & Blockchain",
+        ticketNumber: "NIET-SIH-2026-B2Z55",
         createdAt: new Date().toISOString(),
         verified: false,
       },
@@ -183,7 +200,7 @@ export default function AdminPage() {
 
     const updated = [...samples, ...records.filter((r) => !samples.some((s) => s.email === r.email))];
     saveRecords(updated);
-    setMessage("Sample hackathon attendee passes loaded for testing.");
+    setMessage("Sample SIH attendee passes loaded for testing.");
   }
 
   function handleFastCheckIn(e: React.FormEvent) {
@@ -193,7 +210,7 @@ export default function AdminPage() {
 
     const term = checkInCode.trim().toUpperCase();
     const matchIndex = records.findIndex(
-      (r) => r.ticketNumber.toUpperCase() === term || r.studentId.toUpperCase() === term
+      (r) => r.ticketNumber.toUpperCase() === term || r.rollNumber.toUpperCase() === term
     );
 
     if (matchIndex !== -1) {
@@ -203,36 +220,38 @@ export default function AdminPage() {
       saveRecords(updated);
       setCheckInResult({
         success: true,
-        text: `Check-in Verified: ${match.name} (${match.department} · ${match.studentId})`,
+        text: `Gate Verified: ${match.fullName} (Team: ${match.teamName} · Roll: ${match.rollNumber})`,
       });
       setCheckInCode("");
     } else {
       setCheckInResult({
         success: false,
-        text: `No attendee found with Ticket/ID: ${term}`,
+        text: `No attendee found with Ticket/Roll: ${term}`,
       });
     }
   }
 
   const filteredRecords = records.filter((record) => {
-    const matchesDept = department === "all" || record.department === department;
+    const matchesDomain = domainFilter === "all" || record.domain === domainFilter;
     const matchesStatus = statusFilter === "all" 
       || (statusFilter === "verified" && record.verified) 
       || (statusFilter === "pending" && !record.verified);
     
     const term = query.toLowerCase();
     const matchesQuery = !query.trim() || [
-      record.name,
+      record.fullName,
       record.email,
-      record.studentId,
+      record.rollNumber,
+      record.teamName,
       record.ticketNumber,
-      record.phone
+      record.phone,
+      record.problemStatementId
     ].some((val) => val && val.toLowerCase().includes(term));
 
-    return matchesDept && matchesStatus && matchesQuery;
+    return matchesDomain && matchesStatus && matchesQuery;
   });
 
-  const uniqueDepartments = Array.from(new Set(records.map((r) => r.department).filter(Boolean)));
+  const uniqueDomains = Array.from(new Set(records.map((r) => r.domain).filter(Boolean)));
   const verifiedCount = records.filter((r) => r.verified).length;
 
   // --- LOGIN SCREEN ---
@@ -282,7 +301,7 @@ export default function AdminPage() {
                 autoFocus
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter password"
+                placeholder="Enter passcode"
                 className="input-codersera"
               />
             </div>
@@ -314,7 +333,7 @@ export default function AdminPage() {
     <main className="min-h-screen bg-[#09090b] editorial-grid px-4 py-6 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl space-y-8">
         
-        {/* Top App Header */}
+        {/* Header */}
         <header className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
           <div className="flex items-center gap-4">
             <div className="relative h-11 w-11 overflow-hidden rounded-full border border-white/20 p-0.5">
@@ -328,10 +347,10 @@ export default function AdminPage() {
             </div>
             <div>
               <div className="flex items-center gap-2.5">
-                <h1 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">Event Control Room</h1>
+                <h1 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">SIH & Event Control Room</h1>
                 <span className="badge-pill-sky text-[10px] py-0.5 px-2">LIVE DESK</span>
               </div>
-              <p className="text-xs text-[#a1a1aa] mt-0.5">Automate India NIET Chapter 2026 · Attendee Management</p>
+              <p className="text-xs text-[#a1a1aa] mt-0.5">Automate India & SIH NIET Chapter 2026 · Attendee Management</p>
             </div>
           </div>
 
@@ -354,7 +373,7 @@ export default function AdminPage() {
           </div>
         </header>
 
-        {/* Status Notification */}
+        {/* Message */}
         {message && (
           <div className="rounded-2xl border border-sky-500/20 bg-sky-500/10 p-4 flex items-center justify-between text-xs text-[#38bdf8]">
             <span>{message}</span>
@@ -362,7 +381,7 @@ export default function AdminPage() {
           </div>
         )}
 
-        {/* 4 Analytics Stat Cards */}
+        {/* Stat Cards */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div className="codersera-card p-6 flex items-center justify-between">
             <div>
@@ -403,17 +422,17 @@ export default function AdminPage() {
 
           <div className="codersera-card p-6 flex items-center justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#a1a1aa]">Active Branches</p>
-              <p className="text-3xl font-extrabold text-white mt-1">{uniqueDepartments.length}</p>
-              <p className="text-[11px] text-[#a1a1aa] mt-1">CSE, IT, AI&ML, etc.</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-[#a1a1aa]">SIH Themes</p>
+              <p className="text-3xl font-extrabold text-white mt-1">{uniqueDomains.length}</p>
+              <p className="text-[11px] text-[#a1a1aa] mt-1">AI, Robotics, Web3, etc.</p>
             </div>
             <div className="h-12 w-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#38bdf8]">
-              <Building2 className="h-6 w-6" />
+              <Layers className="h-6 w-6" />
             </div>
           </div>
         </div>
 
-        {/* Gate Scanner / Fast Manual Check-In Bar */}
+        {/* Instant Gate Scanner / Fast Manual Check-In Bar */}
         <div className="codersera-card p-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -422,7 +441,7 @@ export default function AdminPage() {
               </div>
               <div>
                 <h3 className="text-base font-bold text-white">Instant Gate Check-in</h3>
-                <p className="text-xs text-[#a1a1aa]">Enter Ticket Number or Student ID to verify attendee entrance immediately.</p>
+                <p className="text-xs text-[#a1a1aa]">Enter Ticket Number or AKTU Roll ID to verify attendee entrance immediately.</p>
               </div>
             </div>
 
@@ -431,7 +450,7 @@ export default function AdminPage() {
                 type="text"
                 value={checkInCode}
                 onChange={(e) => setCheckInCode(e.target.value)}
-                placeholder="e.g. NIET-2026-X8K101"
+                placeholder="e.g. NIET-SIH-2026-X8K10"
                 className="input-codersera font-mono text-xs w-full md:w-64"
               />
               <button
@@ -472,19 +491,19 @@ export default function AdminPage() {
                   type="text"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search name, roll, email..."
+                  placeholder="Search name, roll, team..."
                   className="input-codersera pl-9 text-xs py-2"
                 />
               </div>
 
               <select
-                value={department}
-                onChange={(e) => setDepartment(e.target.value)}
+                value={domainFilter}
+                onChange={(e) => setDomainFilter(e.target.value)}
                 className="input-codersera text-xs py-2 w-auto"
               >
-                <option value="all">All Departments</option>
-                {uniqueDepartments.map((dept) => (
-                  <option key={dept} value={dept}>{dept}</option>
+                <option value="all">All SIH Domains</option>
+                {uniqueDomains.map((d) => (
+                  <option key={d} value={d}>{d}</option>
                 ))}
               </select>
 
@@ -516,15 +535,6 @@ export default function AdminPage() {
                 <PlusCircle className="h-3.5 w-3.5" />
                 Mock Data
               </button>
-
-              <button
-                type="button"
-                onClick={clearAllPhotos}
-                className="btn-dark-pill text-xs py-2 px-3 text-[#a1a1aa]"
-                title="Clear photos to reduce storage"
-              >
-                <ImageOff className="h-3.5 w-3.5" />
-              </button>
             </div>
           </div>
 
@@ -534,10 +544,11 @@ export default function AdminPage() {
               <thead>
                 <tr className="border-b border-white/10 bg-[#18181b]/50 text-[#a1a1aa] font-semibold uppercase tracking-wider text-[10px]">
                   <th className="p-4 pl-6">Student Info</th>
-                  <th className="p-4">Department & Year</th>
-                  <th className="p-4">College Roll ID</th>
+                  <th className="p-4">Roll Number & Branch</th>
+                  <th className="p-4">SIH Team & Role</th>
+                  <th className="p-4">Problem ID & Domain</th>
                   <th className="p-4">Ticket Number</th>
-                  <th className="p-4">Verification Status</th>
+                  <th className="p-4">Status</th>
                   <th className="p-4 text-right pr-6">Actions</th>
                 </tr>
               </thead>
@@ -549,15 +560,15 @@ export default function AdminPage() {
                         <div className="flex items-center gap-3">
                           {r.photoData ? (
                             <div className="h-9 w-9 rounded-full overflow-hidden border border-[#38bdf8] shrink-0">
-                              <img src={r.photoData} alt={r.name} className="h-full w-full object-cover" />
+                              <img src={r.photoData} alt={r.fullName} className="h-full w-full object-cover" />
                             </div>
                           ) : (
                             <div className="h-9 w-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#38bdf8] shrink-0 font-bold">
-                              {r.name.slice(0, 2).toUpperCase()}
+                              {r.fullName.slice(0, 2).toUpperCase()}
                             </div>
                           )}
                           <div>
-                            <p className="font-bold text-white text-sm">{r.name}</p>
+                            <p className="font-bold text-white text-sm">{r.fullName}</p>
                             <p className="text-[#a1a1aa] text-[11px]">{r.email}</p>
                             <p className="text-[#71717a] text-[10px]">{r.phone}</p>
                           </div>
@@ -565,12 +576,18 @@ export default function AdminPage() {
                       </td>
 
                       <td className="p-4">
-                        <p className="font-semibold text-white">{r.department}</p>
-                        <p className="text-[#a1a1aa] text-[11px]">{r.year}</p>
+                        <p className="font-mono font-bold text-white">{r.rollNumber}</p>
+                        <p className="text-[#a1a1aa] text-[11px]">{r.degreeBranch} · {r.yearOfStudy}</p>
                       </td>
 
-                      <td className="p-4 font-mono font-bold text-[#fafafa]">
-                        {r.studentId}
+                      <td className="p-4">
+                        <p className="font-bold text-[#38bdf8]">{r.teamName}</p>
+                        <p className="text-[#a1a1aa] text-[11px]">{r.teamRole}</p>
+                      </td>
+
+                      <td className="p-4">
+                        <p className="font-mono font-semibold text-white">{r.problemStatementId}</p>
+                        <p className="text-[#34d399] text-[11px] truncate max-w-[150px]">{r.domain}</p>
                       </td>
 
                       <td className="p-4 font-mono font-bold text-[#38bdf8]">
@@ -586,7 +603,7 @@ export default function AdminPage() {
                           {r.verified ? (
                             <>
                               <CheckCircle2 className="h-3 w-3" />
-                              Verified / Checked-in
+                              Verified
                             </>
                           ) : (
                             <>
@@ -603,7 +620,7 @@ export default function AdminPage() {
                           onClick={() => toggleVerification(r.id)}
                           className="btn-dark-pill text-[11px] py-1.5 px-3"
                         >
-                          {r.verified ? "Undo" : "Verify Entry"}
+                          {r.verified ? "Undo" : "Verify"}
                         </button>
                         <button
                           type="button"
@@ -618,7 +635,7 @@ export default function AdminPage() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={6} className="p-12 text-center text-[#71717a]">
+                    <td colSpan={7} className="p-12 text-center text-[#71717a]">
                       No student passes found matching current filters.
                     </td>
                   </tr>
@@ -627,7 +644,7 @@ export default function AdminPage() {
             </table>
           </div>
 
-          {/* Table Footer */}
+          {/* Footer */}
           <div className="p-4 border-t border-white/10 bg-[#18181b]/30 flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#71717a] gap-2">
             <span>Showing {filteredRecords.length} of {records.length} registrations</span>
             <span>Tip: Click on any verification status badge to toggle gate check-in.</span>
